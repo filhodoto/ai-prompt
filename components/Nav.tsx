@@ -14,9 +14,15 @@ import { BuiltInProviderType } from 'next-auth/providers/index';
 
 type Providers = Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>;
 
+const loggedInLinks = [
+  { text: 'My Profile', url: '/profile' },
+  { text: 'Create Prompt', url: '/create-prompt' },
+];
+
 const Nav = () => {
   const isUserLoggedIn = true;
   const [providers, setProviders] = useState<Providers | null>(null);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     const requestProviders = async () => {
@@ -48,9 +54,11 @@ const Nav = () => {
           {isUserLoggedIn ? (
             <>
               {/* For logged in User */}
-              <Link href="/create-prompt" className="black_btn">
-                Create Post
-              </Link>
+              {loggedInLinks.map(({ text, url }) => (
+                <Link key={url} href={url} className="black_btn">
+                  {text}
+                </Link>
+              ))}
               <button
                 type="button"
                 onClick={() => signOut()}
@@ -76,14 +84,71 @@ const Nav = () => {
                     key={provider.name}
                     type="button"
                     onClick={() => signIn(provider.id)}
-                    className="outline_btn"
+                    className="black_btn"
                   >
                     Sign In
                   </button>;
                 })}
+              ;
             </>
           )}
         </div>
+      </div>
+      {/* Mobile */}
+      <div className="sm:hidden flex relative">
+        {isUserLoggedIn ? (
+          // TODO:: Remove this Image duplication in Mobile and Desktop
+          <div className="flex">
+            <Image
+              className="object-contain rounded-full"
+              src="/assets/images/logo.svg"
+              alt="User icon"
+              width={30}
+              height={30}
+              onClick={() => setToggleDropdown((prev) => !prev)}
+            />
+            {toggleDropdown && (
+              <div className="dropdown">
+                {loggedInLinks.map(({ text, url }) => (
+                  <Link
+                    key={url}
+                    href={url}
+                    className="dropdown_link"
+                    onClick={() => setToggleDropdown(false)}
+                  >
+                    {text}
+                  </Link>
+                ))}
+                <button
+                  type="button"
+                  className="dropdown_link pt-3 mt-2 w-2/3 border-t text-right"
+                  onClick={() => {
+                    setToggleDropdown(false);
+                    signOut();
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          // TODO:: Remove this providers duplication in Mobile and Desktop
+          <>
+            {providers &&
+              Object.values(providers).map((provider) => {
+                <button
+                  key={provider.name}
+                  type="button"
+                  onClick={() => signIn(provider.id)}
+                  className="outline_btn"
+                >
+                  Sign In
+                </button>;
+              })}
+            ;
+          </>
+        )}
       </div>
     </nav>
   );
