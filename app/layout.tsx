@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@styles/globals.css';
 import { ReactNode } from 'react';
 import Nav from '@components/Nav';
+import Provider from '@components/Provider';
 
 export const metadata: Metadata = {
   title: 'Promptly',
@@ -13,15 +14,17 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
-      <body>
-        <div className="main">
-          <div className="gradient" />
-        </div>
-        <div className="app">
-          <Nav />
-          {children}
-        </div>
-      </body>
+      <Provider>
+        <body>
+          <div className="main">
+            <div className="gradient" />
+          </div>
+          <div className="app">
+            <Nav />
+            {children}
+          </div>
+        </body>
+      </Provider>
     </html>
   );
 };
