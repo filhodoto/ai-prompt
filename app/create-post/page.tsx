@@ -24,7 +24,7 @@ const CreatePrompt = () => {
       type="Create"
       post={post}
       setPost={createPost}
-      submitting
+      submitting={submitting}
       handleSubmit={createPost}
     />
   );
