@@ -33,6 +33,17 @@ const renderProvidersSignIn = (providers: Providers) => {
     );
   });
 };
+const defaultAvatar = '/assets/images/avatar.svg';
+
+const renderUserAvatar = (image = defaultAvatar) => (
+  <Image
+    className="object-contain rounded-full"
+    src={image}
+    alt="User icon"
+    width={37}
+    height={37}
+  />
+);
 
 const Nav = () => {
   const { data: session, status } = useSession();
@@ -82,13 +93,7 @@ const Nav = () => {
                 Sign Out
               </button>
               <Link href="/profile">
-                <Image
-                  className="object-contain rounded-full"
-                  src="/assets/images/logo.svg"
-                  alt="User icon"
-                  width={30}
-                  height={30}
-                />
+                {renderUserAvatar(session?.user.image)}
               </Link>
             </>
           ) : (
@@ -101,14 +106,7 @@ const Nav = () => {
         {session?.user ? (
           // TODO:: Remove this Image duplication in Mobile and Desktop
           <div className="flex">
-            <Image
-              className="object-contain rounded-full"
-              src="/assets/images/logo.svg"
-              alt="User icon"
-              width={30}
-              height={30}
-              onClick={() => setToggleDropdown((prev) => !prev)}
-            />
+            {renderUserAvatar(session?.user.image)}
             {toggleDropdown && (
               <div className="dropdown">
                 {loggedInLinks.map(({ text, url }) => (
