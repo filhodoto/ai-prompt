@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 let isConnected = true;
-const dbUrl = '';
+
 export const connectToDB = async () => {
   mongoose.set('strictQuery', true);
 
@@ -11,7 +11,7 @@ export const connectToDB = async () => {
   }
 
   try {
-    await mongoose.connect(dbUrl, {
+    await mongoose.connect(process.env.MONGODB_URI as string, {
       dbName: 'test',
     });
     isConnected = true;
