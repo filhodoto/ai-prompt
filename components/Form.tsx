@@ -7,7 +7,7 @@ interface FormProps {
   post: PostProps;
   setPost: (arg0: PostProps) => void;
   submitting: boolean;
-  handleSubmit: () => void;
+  handleSubmit: (e: React.SyntheticEvent) => Promise<void>;
 }
 
 const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
