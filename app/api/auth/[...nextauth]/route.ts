@@ -21,31 +21,41 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  session: async ({ session }) => {},
-  signIn: async ({ profile }: { profile: ProfileProps }) => {
-    try {
-      await connectToDB();
+  callbacks: {
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken;
+      return session;
+    },
+    async signIn({ profile }: { profile: ProfileProps }) {
+      try {
+        await connectToDB();
 
-      // 1. Check if user already exists
-      const user = await User.findOne({ email: profile.email });
-      // 2. If not, create new user
-      if (!user) {
-        // TODO:: Make sure this works and probably make this check on frontend
-        const sanitizedName = profile.name.replace(/\s/g, '').toLowerCase();
+        // Remove spaces and change "ç" for "c"
+        const sanitizedName = profile.name
+          .replace(/\s/g, '')
+          .replace(/ç/g, 'c')
+          .toLowerCase();
 
-        User.create({
-          email: profile.email,
-          username: sanitizedName,
-          image: profile.picture,
-        });
+        // 1. Check if user already exists
+        const user = await User.findOne({ email: profile.email });
+
+        // 2. If not, create new user
+        if (!user) {
+          User.create({
+            email: profile.email,
+            username: sanitizedName,
+            image: profile.picture,
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.log('ERROR signin in:: ', error);
+
+        return false;
       }
-
-      return true;
-    } catch (error) {
-      console.log('ERROR signin in:: ', error);
-
-      return false;
-    }
+    },
   },
 });
 

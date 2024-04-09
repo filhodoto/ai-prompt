@@ -33,6 +33,7 @@ const renderProvidersSignIn = (providers: Providers) => {
     );
   });
 };
+
 const defaultAvatar = '/assets/images/avatar.svg';
 
 const renderUserAvatar = (image = defaultAvatar) => (
@@ -93,7 +94,7 @@ const Nav = () => {
                 Sign Out
               </button>
               <Link href="/profile">
-                {renderUserAvatar(session?.user.image)}
+                {renderUserAvatar(session?.user.image as string)}
               </Link>
             </>
           ) : (
@@ -106,7 +107,7 @@ const Nav = () => {
         {session?.user ? (
           // TODO:: Remove this Image duplication in Mobile and Desktop
           <div className="flex">
-            {renderUserAvatar(session?.user.image)}
+            {renderUserAvatar(session?.user.image as string)}
             {toggleDropdown && (
               <div className="dropdown">
                 {loggedInLinks.map(({ text, url }) => (
