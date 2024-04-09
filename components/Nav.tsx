@@ -16,7 +16,7 @@ type Providers = Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>;
 
 const loggedInLinks = [
   { text: 'My Profile', url: '/profile' },
-  { text: 'Create Prompt', url: '/create-prompt' },
+  { text: 'Create Post', url: '/create-post' },
 ];
 
 const renderProvidersSignIn = (providers: Providers) => {
