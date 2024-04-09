@@ -11,7 +11,12 @@ const handler = NextAuth({
     }),
   ],
   session: async ({ session }) => {},
-  signIn: async ({ profile }) => {},
+  signIn: async ({ profile }) => {
+    try {
+    } catch (error) {
+      console.log('ERROR Sign in:: ', error);
+    }
+  },
 });
 
 /* Not the common way but the " the preferred way to handle REST-like requests in App Router (app/)."
