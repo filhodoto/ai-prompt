@@ -81,7 +81,7 @@ const Nav = () => {
           {session?.user ? (
             <>
               {/* For logged in User */}
-              {loggedInLinks.map(({ text, url }) => (
+              {[loggedInLinks[1]].map(({ text, url }) => (
                 <Link key={url} href={url} className="black_btn">
                   {text}
                 </Link>
@@ -105,7 +105,6 @@ const Nav = () => {
       {/* Mobile */}
       <div className="sm:hidden flex relative">
         {session?.user ? (
-          // TODO:: Remove this Image duplication in Mobile and Desktop
           <div className="flex">
             {renderUserAvatar(session?.user.image as string)}
             {toggleDropdown && (
