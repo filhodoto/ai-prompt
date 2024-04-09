@@ -31,7 +31,7 @@ const handler = NextAuth({
       // 2. If not, create new user
       if (!user) {
         // TODO:: Make sure this works and probably make this check on frontend
-        const sanitizedName = profile.name.replace(' ', '').toLowerCase();
+        const sanitizedName = profile.name.replace(/\s/g, '').toLowerCase();
 
         User.create({
           email: profile.email,
