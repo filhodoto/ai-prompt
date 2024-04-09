@@ -19,8 +19,35 @@ const loggedInLinks = [
   { text: 'Create Prompt', url: '/create-prompt' },
 ];
 
+const renderProvidersSignIn = (providers: Providers) => {
+  return Object.values(providers).map((provider) => {
+    return (
+      <button
+        key={provider.name}
+        type="button"
+        onClick={() => signIn(provider.id)}
+        className="outline_btn"
+      >
+        Sign In
+      </button>
+    );
+  });
+};
+
+const defaultAvatar = '/assets/images/avatar.svg';
+
+const renderUserAvatar = (image = defaultAvatar) => (
+  <Image
+    className="object-contain rounded-full"
+    src={image}
+    alt="User icon"
+    width={37}
+    height={37}
+  />
+);
+
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session, status } = useSession();
   const [providers, setProviders] = useState<Providers | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -51,10 +78,10 @@ const Nav = () => {
       {/* Desktop */}
       <div className="sm:flex hidden">
         <div className="flex gap-3 md:fap-5">
-          {isUserLoggedIn ? (
+          {session?.user ? (
             <>
               {/* For logged in User */}
-              {loggedInLinks.map(({ text, url }) => (
+              {[loggedInLinks[1]].map(({ text, url }) => (
                 <Link key={url} href={url} className="black_btn">
                   {text}
                 </Link>
@@ -67,46 +94,19 @@ const Nav = () => {
                 Sign Out
               </button>
               <Link href="/profile">
-                <Image
-                  className="object-contain rounded-full"
-                  src="/assets/images/logo.svg"
-                  alt="User icon"
-                  width={30}
-                  height={30}
-                />
+                {renderUserAvatar(session?.user.image as string)}
               </Link>
             </>
           ) : (
-            <>
-              {providers &&
-                Object.values(providers).map((provider) => {
-                  <button
-                    key={provider.name}
-                    type="button"
-                    onClick={() => signIn(provider.id)}
-                    className="black_btn"
-                  >
-                    Sign In
-                  </button>;
-                })}
-              ;
-            </>
+            providers && renderProvidersSignIn(providers)
           )}
         </div>
       </div>
       {/* Mobile */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
-          // TODO:: Remove this Image duplication in Mobile and Desktop
+        {session?.user ? (
           <div className="flex">
-            <Image
-              className="object-contain rounded-full"
-              src="/assets/images/logo.svg"
-              alt="User icon"
-              width={30}
-              height={30}
-              onClick={() => setToggleDropdown((prev) => !prev)}
-            />
+            {renderUserAvatar(session?.user.image as string)}
             {toggleDropdown && (
               <div className="dropdown">
                 {loggedInLinks.map(({ text, url }) => (
@@ -133,21 +133,7 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          // TODO:: Remove this providers duplication in Mobile and Desktop
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => {
-                <button
-                  key={provider.name}
-                  type="button"
-                  onClick={() => signIn(provider.id)}
-                  className="outline_btn"
-                >
-                  Sign In
-                </button>;
-              })}
-            ;
-          </>
+          providers && renderProvidersSignIn(providers)
         )}
       </div>
     </nav>
