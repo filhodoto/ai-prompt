@@ -19,8 +19,23 @@ const loggedInLinks = [
   { text: 'Create Prompt', url: '/create-prompt' },
 ];
 
+const renderProvidersSignIn = (providers: Providers) => {
+  return Object.values(providers).map((provider) => {
+    return (
+      <button
+        key={provider.name}
+        type="button"
+        onClick={() => signIn(provider.id)}
+        className="outline_btn"
+      >
+        Sign In
+      </button>
+    );
+  });
+};
+
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session, status } = useSession();
   const [providers, setProviders] = useState<Providers | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -51,7 +66,7 @@ const Nav = () => {
       {/* Desktop */}
       <div className="sm:flex hidden">
         <div className="flex gap-3 md:fap-5">
-          {isUserLoggedIn ? (
+          {session?.user ? (
             <>
               {/* For logged in User */}
               {loggedInLinks.map(({ text, url }) => (
@@ -77,26 +92,13 @@ const Nav = () => {
               </Link>
             </>
           ) : (
-            <>
-              {providers &&
-                Object.values(providers).map((provider) => {
-                  <button
-                    key={provider.name}
-                    type="button"
-                    onClick={() => signIn(provider.id)}
-                    className="black_btn"
-                  >
-                    Sign In
-                  </button>;
-                })}
-              ;
-            </>
+            providers && renderProvidersSignIn(providers)
           )}
         </div>
       </div>
       {/* Mobile */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           // TODO:: Remove this Image duplication in Mobile and Desktop
           <div className="flex">
             <Image
@@ -133,21 +135,7 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          // TODO:: Remove this providers duplication in Mobile and Desktop
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => {
-                <button
-                  key={provider.name}
-                  type="button"
-                  onClick={() => signIn(provider.id)}
-                  className="outline_btn"
-                >
-                  Sign In
-                </button>;
-              })}
-            ;
-          </>
+          providers && renderProvidersSignIn(providers)
         )}
       </div>
     </nav>
