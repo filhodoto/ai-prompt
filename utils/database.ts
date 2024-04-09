@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-let isConnected = true;
+let isConnected = false;
 
 export const connectToDB = async () => {
   mongoose.set('strictQuery', true);
@@ -12,9 +12,11 @@ export const connectToDB = async () => {
 
   try {
     await mongoose.connect(process.env.MONGODB_URI as string, {
-      dbName: 'test',
+      dbName: 'prompt_sharing',
     });
+
     isConnected = true;
+
     console.log('MongoDB Connected >>');
   } catch (error) {
     console.log('Error connecting to Database >> ', error);
