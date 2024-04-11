@@ -1,16 +1,10 @@
 import User from '@models/user';
+import { UserProps } from '@types/shared';
 import { connectToDB } from '@utils/database';
-import NextAuth, { Session } from 'next-auth';
+import NextAuth from 'next-auth';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
-interface UserProps {
-  id: string;
-  name: string;
-  email: string;
-  picture: string;
-}
-
-export interface SessionProps {
+interface SessionProps {
   user: UserProps;
 }
 
