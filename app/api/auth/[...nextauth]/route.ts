@@ -1,12 +1,17 @@
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
-import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
+import NextAuth, { Session } from 'next-auth';
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
-interface ProfileProps {
+interface UserProps {
+  id: string;
   name: string;
   email: string;
   picture: string;
+}
+
+export interface SessionProps {
+  user: UserProps;
 }
 
 /* More about session and signIn callbacks here:
@@ -22,12 +27,15 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.accessToken = token.accessToken;
+    async session({ session }: { session: SessionProps }) {
+      // Store the user id from MongoDB to session
+      const sessionUser = await User.findOne({ email: session.user.email });
+
+      session.user.id = sessionUser._id.toString();
+
       return session;
     },
-    async signIn({ profile }: { profile: ProfileProps }) {
+    async signIn({ profile }: { profile: GoogleProfile }) {
       try {
         await connectToDB();
 
