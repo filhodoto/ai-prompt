@@ -1,10 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import PromptCard from './PromptCard';
+import { PostProps } from '@utils/types/shared';
 
 const GET_POSTS_API = '/api/posts';
 
 const Feed = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostProps[]>([]);
 
   const getPosts = async () => {
     try {
@@ -27,7 +29,13 @@ const Feed = () => {
     getPosts();
   }, []);
 
-  return <div>Feed</div>;
+  return (
+    <div>
+      {posts.map((post) => {
+        return <PromptCard key={post._id} post={post} />;
+      })}
+    </div>
+  );
 };
 
 export default Feed;
