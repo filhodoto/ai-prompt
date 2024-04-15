@@ -1,13 +1,29 @@
 'use client';
 import { PostProps } from '@utils/types/shared';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const PromptCard = ({ post }: { post: PostProps }) => {
-  const [copied, setCopied] = useState('');
+  const router = useRouter();
 
-  // TODO:: Check if this should be done here, or defined in parent and passed down
-  const handleProfileClick = () => {};
+  const [copied, setCopied] = useState(false);
+
+  const handleProfileClick = () =>
+    router.push(`profile/${post.creator.username}`);
+
+  const handleCopyClick = () => {
+    // Update state so we can show feedback to suer that text as been copied
+    setCopied(true);
+
+    // Copy text to clipboard
+    navigator.clipboard.writeText(post.prompt);
+
+    // Clean copy stat after 3s
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
 
   return (
     <div className="prompt_card">
@@ -32,14 +48,10 @@ const PromptCard = ({ post }: { post: PostProps }) => {
             </p>
           </div>
         </div>
-        <div className="copy_btn" onClick={() => {}}>
+        <div className="copy_btn" onClick={handleCopyClick}>
           <Image
             alt="copy_btn"
-            src={
-              copied === post.prompt
-                ? '/assets/icons/tick.svg'
-                : '/assets/icons/copy.svg'
-            }
+            src={copied ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg'}
             width={12}
             height={12}
           />
