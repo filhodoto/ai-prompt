@@ -7,6 +7,7 @@ const GET_POSTS_API = '/api/posts';
 
 const Feed = () => {
   const [posts, setPosts] = useState<PostProps[]>([]);
+  const [searchText, setSearchText] = useState('');
 
   const getPosts = async () => {
     try {
@@ -16,7 +17,7 @@ const Feed = () => {
       // If post was created correctly we navigate user to homepage
       if (response.ok) {
         const posts = await response.json();
-        console.log(posts);
+
         // setState
         setPosts(posts);
       }
@@ -30,11 +31,26 @@ const Feed = () => {
   }, []);
 
   return (
-    <div>
-      {posts.map((post) => {
-        return <PromptCard key={post._id} post={post} />;
-      })}
-    </div>
+    <section className="feed">
+      <form className="relative w-full flex-center">
+        <input
+          type="text"
+          className="search_input peer"
+          placeholder="Search for user or tag"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          required
+        />
+      </form>
+      {/* Render posts */}
+      {posts && (
+        <div className="mt-16 prompt_layout">
+          {posts.map((post) => {
+            return <PromptCard key={post._id} post={post} />;
+          })}
+        </div>
+      )}
+    </section>
   );
 };
 

@@ -5,7 +5,10 @@ import React, { useState } from 'react';
 
 const PromptCard = ({ post }: { post: PostProps }) => {
   const [copied, setCopied] = useState('');
+
+  // TODO:: Check if this should be done here, or defined in parent and passed down
   const handleProfileClick = () => {};
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
