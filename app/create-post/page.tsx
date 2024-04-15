@@ -1,14 +1,9 @@
 'use client';
 import Form from '@components/Form';
-import { UserProps } from '@types/shared';
+import { UserProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-
-export interface PostProps {
-  prompt: string;
-  tag: string;
-}
 
 const defaultPost = {
   prompt: '',

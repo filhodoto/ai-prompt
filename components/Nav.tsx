@@ -54,7 +54,6 @@ const Nav = () => {
   useEffect(() => {
     const requestProviders = async () => {
       const providers = await getProviders();
-      console.log('Providers', providers);
 
       // Set providers in state
       setProviders(providers);

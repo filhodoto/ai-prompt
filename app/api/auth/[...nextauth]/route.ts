@@ -1,5 +1,5 @@
 import User from '@models/user';
-import { UserProps } from '@types/shared';
+import { UserProps } from '@utils/types/shared';
 import { connectToDB } from '@utils/database';
 import NextAuth from 'next-auth';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';

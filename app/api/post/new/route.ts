@@ -1,7 +1,7 @@
 import Post from '@models/post';
 import { connectToDB } from '@utils/database';
 
-export const POST = async (req) => {
+export const POST = async (req: Request) => {
   const { userId, prompt, tag } = await req.json();
 
   try {
@@ -16,6 +16,7 @@ export const POST = async (req) => {
     // Return created post with 201 status (Created)
     return new Response(JSON.stringify(newPost), { status: 201 });
   } catch (error) {
+    console.log('error >>> ', error);
     return new Response('Failed to create post', { status: 500 });
   }
 };
