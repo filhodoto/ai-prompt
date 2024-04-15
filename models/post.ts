@@ -4,14 +4,16 @@ import { Schema, model, models } from 'mongoose';
 const PostSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
-    unique: true,
-    required: true,
+    ref: 'User', // Create a one to many relation and populate post with creator data
   },
   prompt: {
     type: String,
     required: true,
   },
-  tag: String,
+  tag: {
+    type: String,
+    required: true,
+  },
 });
 
 // Check if a Post model already exists in the models collection. If not, create one using model():

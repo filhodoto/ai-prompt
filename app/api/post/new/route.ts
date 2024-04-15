@@ -16,6 +16,7 @@ export const POST = async (req: Request) => {
     // Return created post with 201 status (Created)
     return new Response(JSON.stringify(newPost), { status: 201 });
   } catch (error) {
+    console.log('error >>> ', error);
     return new Response('Failed to create post', { status: 500 });
   }
 };
