@@ -8,7 +8,7 @@ export const GET = async (req: Request) => {
     await connectToDB();
 
     // Get all posts (populate "creator" key which we create on "api/post/new")
-    const allPosts = await Post.find({}).populate('creator');
+    const allPosts = await Post.find({}).populate('creator').exec();
 
     // Return all posts
     return NextResponse.json(allPosts, { status: 200 });

@@ -5,3 +5,10 @@ export interface UserProps {
   email: string;
   picture: string;
 }
+
+export interface PostProps {
+  creator: any;
+  prompt: string;
+  tag: string;
+  _id: string;
+}
