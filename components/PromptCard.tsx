@@ -20,7 +20,6 @@ const PromptCard = ({ post }: { post: PostProps }) => {
             height={40}
             className="rounded-full object-contain"
           />
-
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">
               {post.creator.username}
@@ -42,15 +41,15 @@ const PromptCard = ({ post }: { post: PostProps }) => {
             height={12}
           />
         </div>
-
-        <p className="my-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
-        <p
-          className="font-inter text-sm blue_gradient cursor-pointer"
-          onClick={() => console.log('handleTagClick')}
-        >
-          {post.tag}
-        </p>
       </div>
+
+      <p className="my-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
+      <p
+        className="font-inter text-sm blue_gradient cursor-pointer"
+        onClick={() => console.log('handleTagClick')}
+      >
+        {post.tag}
+      </p>
     </div>
   );
 };
