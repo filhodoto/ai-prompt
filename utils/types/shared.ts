@@ -7,7 +7,7 @@ export interface UserProps {
 }
 
 export interface PostProps {
-  creator: any;
+  creator: UserProps;
   prompt: string;
   tag: string;
   _id: string;
