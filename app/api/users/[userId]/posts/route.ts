@@ -3,7 +3,6 @@ import { connectToDB } from '@utils/database';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request, { params }) => {
-  console.log('params >> ', params);
   try {
     // TODO:: This is duplicated in all routes, should create a middleware for this
     await connectToDB();

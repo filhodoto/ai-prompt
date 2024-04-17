@@ -13,8 +13,13 @@ const Profile = () => {
     // Logic to edit profile here
   };
 
-  const handleDelete = () => {
+  const handleDelete = async (id: string) => {
     // Logic to edit profile here
+    try {
+      await fetch(`/api/post/${id}`, { method: 'DELETE' });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getUserPosts = useCallback(async () => {
@@ -50,11 +55,21 @@ const Profile = () => {
       <h1 className="head_text text-left">
         <span className="blue_gradient">{user.name} Profile</span>
       </h1>
-      {/* <p className="desc text-left">{desc}</p> */}
+      <p className="desc text-left">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
 
       <div className="mt-10 prompt_layout">
         {posts &&
-          posts.map((post) => <PromptCard key={post._id} post={post} />)}
+          posts.map((post) => (
+            <PromptCard
+              key={post._id}
+              post={post}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          ))}
       </div>
     </section>
   ) : (

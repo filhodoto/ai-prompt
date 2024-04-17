@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 interface PromptCardProps {
   post: PostProps;
   handleEdit?: () => void;
-  handleDelete?: () => void;
+  handleDelete: (id: string) => void;
 }
 
 const PromptCard = ({ post, handleEdit, handleDelete }: PromptCardProps) => {
@@ -80,7 +80,10 @@ const PromptCard = ({ post, handleEdit, handleDelete }: PromptCardProps) => {
           <p className="font-inter text-sm text-gray-500 cursor-pointer">
             Edit
           </p>
-          <p className="font-inter text-sm text-red-600 cursor-pointer">
+          <p
+            className="font-inter text-sm text-red-600 cursor-pointer"
+            onClick={() => handleDelete(post._id)}
+          >
             Delete
           </p>
         </div>
