@@ -9,7 +9,7 @@ export const GET = async (req: Request, { params }) => {
   try {
     await connectToDB();
 
-    const post = await Post.findById({ id });
+    const post = await Post.findById({ _id: id });
 
     // Return post or 404 message in case we don't find it
     return post
@@ -36,5 +36,31 @@ export const DELETE = async (req: Request, { params }) => {
   } catch (error) {
     console.log('error >>> ', error);
     return new Response('Failed to delete post', { status: 500 });
+  }
+};
+
+// Update Post
+// NOTE:: "the PATCH method is the correct choice for partially updating an existing resource, and you should only use PUT if you’re replacing a resource in its entirety."
+export const PATCH = async (req: Request, { params }) => {
+  const { id } = params;
+  const { prompt, tag } = await req.json();
+
+  try {
+    await connectToDB();
+
+    // Find and update value
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: id },
+      { prompt, tag }
+    );
+
+    // Return created post with 200 status
+    // Return post or 404 message in case we don't find it
+    return updatedPost
+      ? NextResponse.json(updatedPost, { status: 200 })
+      : new Response('Post not found!', { status: 404 });
+  } catch (error) {
+    console.log('error >>> ', error);
+    return new Response('Failed to update post', { status: 500 });
   }
 };
