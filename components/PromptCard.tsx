@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 interface PromptCardProps {
   post: PostProps;
-  handleEdit?: () => void;
+  handleEdit: (id: string) => void;
   handleDelete: (id: string) => void;
 }
 
@@ -77,7 +77,10 @@ const PromptCard = ({ post, handleEdit, handleDelete }: PromptCardProps) => {
       </p>
       {isCreator && pathName === '/profile' && (
         <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
-          <p className="font-inter text-sm text-gray-500 cursor-pointer">
+          <p
+            className="font-inter text-sm text-gray-500 cursor-pointer"
+            onClick={() => handleEdit(post._id)}
+          >
             Edit
           </p>
           <p
