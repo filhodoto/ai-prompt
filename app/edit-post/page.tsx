@@ -3,7 +3,7 @@ import Form from '@components/Form';
 import { UserProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const defaultPost = {
   prompt: '',
@@ -42,13 +42,16 @@ const EditPost = () => {
     // Update in database
     try {
       try {
-        await fetch(`/api/post/${postId}`, {
+        const response = await fetch(`/api/post/${postId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(postBody),
         });
+
+        // If post was created correctly we navigate user to homepage
+        if (response.ok) router.push('/');
       } catch (error) {
         console.log(error);
       }
@@ -59,9 +62,8 @@ const EditPost = () => {
     }
   };
 
-  const getPost = async (id: string) => {
+  const getPost = useCallback(async (id: string) => {
     try {
-      console.log('postId >>> ', postId);
       // Get all posts
       const response = await fetch(`/api/post/${id}`);
 
@@ -75,11 +77,12 @@ const EditPost = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
+
   useEffect(() => {
     // Make request to get post data in edit values
     postId && getPost(postId);
-  }, [postId]);
+  }, [getPost, postId]);
 
   return post ? (
     <Form

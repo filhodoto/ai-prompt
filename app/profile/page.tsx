@@ -9,6 +9,7 @@ const Profile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [user, setUser] = useState<UserProps | null>(null);
+
   const router = useRouter();
 
   const handleEdit = async (id: string) => {
@@ -16,9 +17,22 @@ const Profile = () => {
   };
 
   const handleDelete = async (id: string) => {
+    // Prompt user to make sure they want to delete
+    const hasConfirmedDeletion = confirm(
+      'Are you sure you want to delete this post?'
+    );
+
+    if (!hasConfirmedDeletion) return;
+
     // Logic to edit profile here
     try {
+      // Delete post in db
       await fetch(`/api/post/${id}`, { method: 'DELETE' });
+
+      // Update posts state so that we remove the post we just deleted from our state
+      const filtered = posts.filter((post) => post._id !== id);
+
+      setPosts(filtered);
     } catch (error) {
       console.log(error);
     }
