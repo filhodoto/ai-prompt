@@ -2,15 +2,17 @@
 import PromptCard from '@components/PromptCard';
 import { PostProps, UserProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 
 const Profile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [user, setUser] = useState<UserProps | null>(null);
+  const router = useRouter();
 
-  const handleEdit = () => {
-    // Logic to edit profile here
+  const handleEdit = async (id: string) => {
+    router.push(`/edit-post/?id=${id}`);
   };
 
   const handleDelete = async (id: string) => {
