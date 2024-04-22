@@ -1,3 +1,7 @@
+# AI prompt library
+
+Web application that empowers you to search, create, and manage prompts that unlock the potential of advanced AI models like ChatGPT and Gemini. Use it as an assistant for crafting the perfect instructions to guide these intelligent systems.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -34,3 +38,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Built with
+
+- React
+- NextJS
+- NextAuth
+- Mongoose
+- MongoDB
+
+## Optimizations
+
+- [ ] Deploy on Vercel
+- [ ] Implement search
+  - by tag
+  - by post text
+  - by user
+- [ ] Implement view for other profiles (use next navigation slug)
+- [ ] Improve typings
+- [ ] Implement tag click
+- [ ] Implement GraphQL
+- [ ] Add tests with Jest + Testing Library
+- [ ] Redo design
