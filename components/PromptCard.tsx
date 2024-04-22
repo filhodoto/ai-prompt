@@ -1,13 +1,23 @@
 'use client';
 import { PostProps } from '@utils/types/shared';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-const PromptCard = ({ post }: { post: PostProps }) => {
-  const router = useRouter();
+interface PromptCardProps {
+  post: PostProps;
+  handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
+}
 
+const PromptCard = ({ post, handleEdit, handleDelete }: PromptCardProps) => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const pathName = usePathname();
   const [copied, setCopied] = useState(false);
+
+  const isCreator = session?.user.id === post.creator._id;
 
   const handleProfileClick = () =>
     router.push(`profile/${post.creator.username}`);
@@ -63,8 +73,24 @@ const PromptCard = ({ post }: { post: PostProps }) => {
         className="font-inter text-sm blue_gradient cursor-pointer"
         onClick={() => console.log('handleTagClick')}
       >
-        {post.tag}
+        #{post.tag}
       </p>
+      {isCreator && pathName === '/profile' && (
+        <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
+          <p
+            className="font-inter text-sm text-gray-500 cursor-pointer"
+            onClick={() => handleEdit(post._id)}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm text-red-600 cursor-pointer"
+            onClick={() => handleDelete(post._id)}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };

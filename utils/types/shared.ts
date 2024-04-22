@@ -3,11 +3,11 @@ export interface UserProps {
   id: string;
   name: string;
   email: string;
-  picture: string;
+  image: string;
 }
 
 export interface PostProps {
-  creator: any;
+  creator: UserProps;
   prompt: string;
   tag: string;
   _id: string;
