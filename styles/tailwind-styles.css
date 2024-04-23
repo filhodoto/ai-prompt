@@ -4,12 +4,12 @@
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
 
-.black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+.green_btn {
+  @apply rounded-full border border-logo-green bg-logo-green py-1.5 px-5 text-white transition-all hover:bg-white hover:text-logo-green text-center text-sm font-inter flex items-center justify-center;
 }
 
 .outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-logo-green bg-transparent py-1.5 px-5 text-logo-green transition-all hover:bg-logo-green hover:text-white text-center text-sm font-inter flex items-center justify-center;
 }
 
 .head_text {

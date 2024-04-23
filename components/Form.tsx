@@ -15,8 +15,8 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
     <section className="w-full flex-start flex-col">
       <h1 className="head_text text-left blue_gradient">{type} Post</h1>
       <p className="desc max-w-md">
-        {type} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Share your amazing prompts with the world and unlock the full potential
+        of any AI platform.
       </p>
       <form
         onSubmit={handleSubmit}
@@ -54,7 +54,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
           <button
             type="submit"
             disabled={submitting}
-            className="rounded-full border bg-transparent py-1.5 px-5  transition-all hover:bg-green-700 hover:text-white hover:border-green-700 text-center text-sm font-inter flex items-center justify-center w-auto border-primary-blue text-primary-blue"
+            className="rounded-full border bg-transparent py-1.5 px-5  transition-all hover:bg-logo-green hover:text-white hover:border-logo-green text-center text-sm font-inter flex items-center justify-center w-auto border-logo-green text-logo-green"
           >
             {type} {submitting && '...'}
           </button>

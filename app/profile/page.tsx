@@ -72,8 +72,8 @@ const Profile = () => {
         <span className="blue_gradient">{user.name} Profile</span>
       </h1>
       <p className="desc text-left">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Your personalized profile page awaits your exceptional prompts. Share
+        the power of your imagination and inspire a community of creators.
       </p>
 
       <div className="mt-10 prompt_layout">

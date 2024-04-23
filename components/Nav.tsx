@@ -70,8 +70,8 @@ const Nav = () => {
           className="object-contain"
           src="/assets/images/logo.svg"
           alt="Promptly Logo"
-          width={30}
-          height={30}
+          width={60}
+          height={60}
         />
         <p className="logo_text">Promptly</p>
       </Link>
@@ -82,7 +82,7 @@ const Nav = () => {
             <>
               {/* For logged in User */}
               {[loggedInLinks[1]].map(({ text, url }) => (
-                <Link key={url} href={url} className="black_btn">
+                <Link key={url} href={url} className="green_btn">
                   {text}
                 </Link>
               ))}
