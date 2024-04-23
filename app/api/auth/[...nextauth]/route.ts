@@ -1,12 +1,7 @@
 import User from '@models/user';
-import { UserProps } from '@utils/types/shared';
 import { connectToDB } from '@utils/database';
 import NextAuth from 'next-auth';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
-
-interface SessionProps {
-  user: UserProps;
-}
 
 /* More about session and signIn callbacks here:
 https://next-auth.js.org/getting-started/example#extensibility */
@@ -21,11 +16,11 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session }: { session: SessionProps }) {
+    async session({ session }) {
       // Store the user id from MongoDB to session
-      const sessionUser = await User.findOne({ email: session.user.email });
+      const sessionUser = await User.findOne({ email: session.user?.email });
 
-      session.user.id = sessionUser._id.toString();
+      if (session.user) session.user.id = sessionUser._id.toString();
 
       return session;
     },

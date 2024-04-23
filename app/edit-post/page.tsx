@@ -1,6 +1,5 @@
 'use client';
 import Form from '@components/Form';
-import { UserProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -28,8 +27,7 @@ const EditPost = () => {
     setSubmitting(true);
 
     // If user id not available, stop process
-    // TODO:: Find a way to type session using UserProps in a not intrusive way so we can remove this
-    if (!session?.user.id) {
+    if (!session?.user?.id) {
       setSubmitting(false);
       return;
     }

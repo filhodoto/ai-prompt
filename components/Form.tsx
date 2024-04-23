@@ -1,4 +1,4 @@
-import { PostProps } from '@app/create-post/page';
+import { PostProps } from '@utils/types/shared';
 import Link from 'next/link';
 import React from 'react';
 
