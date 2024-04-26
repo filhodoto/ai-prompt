@@ -24,8 +24,13 @@ const handler = NextAuth({
 
       return session;
     },
-    async signIn({ profile }: { profile: GoogleProfile }) {
+    async signIn({ profile }) {
       try {
+        /* We know this will be a GoogleProfile and we extend it as per documentation. But for some reason typescript 
+        still thinks name can be undefined, so we need to do this check */
+        if (!profile || !profile.name)
+          throw new Error('Google profile data unavailable. Sign-in failed.');
+
         await connectToDB();
 
         // Remove spaces and change "ç" for "c"

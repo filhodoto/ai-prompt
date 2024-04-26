@@ -1,5 +1,6 @@
 import NextAuth, { DefaultSession } from 'next-auth';
 import { UserProps } from './shared';
+import { GoogleProfile } from 'next-auth/providers/google';
 
 declare module 'next-auth' {
   /**
@@ -8,4 +9,7 @@ declare module 'next-auth' {
   interface Session {
     user?: UserProps;
   }
+
+  /** The OAuth profile returned from your provider */
+  interface Profile extends GoogleProfile {} // Profile now extends GoogleProfile
 }
