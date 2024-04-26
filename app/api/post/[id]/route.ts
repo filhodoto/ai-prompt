@@ -2,8 +2,12 @@ import Post from '@models/post';
 import { connectToDB } from '@utils/database';
 import { NextResponse } from 'next/server';
 
+interface ResponseProps {
+  params: { id: string };
+}
+
 // GET post from DB by Id
-export const GET = async (req: Request, { params }) => {
+export const GET = async (req: Request, { params }: ResponseProps) => {
   const { id } = params;
 
   try {
@@ -22,7 +26,7 @@ export const GET = async (req: Request, { params }) => {
 };
 
 // Delete post from DB by Id
-export const DELETE = async (req: Request, { params }) => {
+export const DELETE = async (req: Request, { params }: ResponseProps) => {
   const { id } = params;
 
   try {
@@ -41,7 +45,7 @@ export const DELETE = async (req: Request, { params }) => {
 
 // Update Post
 // NOTE:: "the PATCH method is the correct choice for partially updating an existing resource, and you should only use PUT if you’re replacing a resource in its entirety."
-export const PATCH = async (req: Request, { params }) => {
+export const PATCH = async (req: Request, { params }: ResponseProps) => {
   const { id } = params;
   const { prompt, tag } = await req.json();
 
