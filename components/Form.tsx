@@ -1,11 +1,11 @@
-import { PostProps } from '@app/create-post/page';
+import { PostInfoProps, PostProps } from '@utils/types/shared';
 import Link from 'next/link';
 import React from 'react';
 
 interface FormProps {
   type: 'Create' | 'Delete' | 'Update';
-  post: PostProps;
-  setPost: (arg0: PostProps) => void;
+  post: PostInfoProps;
+  setPost: (arg0: PostInfoProps) => void;
   submitting: boolean;
   handleSubmit: (e: React.SyntheticEvent) => Promise<void>;
 }

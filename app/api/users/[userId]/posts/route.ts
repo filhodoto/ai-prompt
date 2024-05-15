@@ -2,7 +2,11 @@ import Post from '@models/post';
 import { connectToDB } from '@utils/database';
 import { NextResponse } from 'next/server';
 
-export const GET = async (req: Request, { params }) => {
+interface ResponseProps {
+  params: { userId: string };
+}
+
+export const GET = async (req: Request, { params }: ResponseProps) => {
   try {
     // TODO:: This is duplicated in all routes, should create a middleware for this
     await connectToDB();

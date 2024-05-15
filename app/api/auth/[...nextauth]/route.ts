@@ -1,12 +1,7 @@
 import User from '@models/user';
-import { UserProps } from '@utils/types/shared';
 import { connectToDB } from '@utils/database';
 import NextAuth from 'next-auth';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
-
-interface SessionProps {
-  user: UserProps;
-}
 
 /* More about session and signIn callbacks here:
 https://next-auth.js.org/getting-started/example#extensibility */
@@ -21,16 +16,21 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session }: { session: SessionProps }) {
+    async session({ session }) {
       // Store the user id from MongoDB to session
-      const sessionUser = await User.findOne({ email: session.user.email });
+      const sessionUser = await User.findOne({ email: session.user?.email });
 
-      session.user.id = sessionUser._id.toString();
+      if (session.user) session.user.id = sessionUser._id.toString();
 
       return session;
     },
-    async signIn({ profile }: { profile: GoogleProfile }) {
+    async signIn({ profile }) {
       try {
+        /* We know this will be a GoogleProfile and we extend it as per documentation. But for some reason typescript 
+        still thinks name can be undefined, so we need to do this check */
+        if (!profile || !profile.name)
+          throw new Error('Google profile data unavailable. Sign-in failed.');
+
         await connectToDB();
 
         // Remove spaces and change "ç" for "c"

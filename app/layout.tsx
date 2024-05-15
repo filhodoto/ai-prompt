@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@styles/globals.css';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 
@@ -21,7 +21,8 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           </div>
           <div className="app">
             <Nav />
-            {children}
+            {/* TODO:: Add an actual loading animation here */}
+            <Suspense>{children}</Suspense>
           </div>
         </body>
       </Provider>

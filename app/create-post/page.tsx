@@ -1,6 +1,5 @@
 'use client';
 import Form from '@components/Form';
-import { UserProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -15,7 +14,6 @@ const CREATE_POST_API = '/api/post/new';
 
 // TODO:: Use React Form for the form in the future
 const CreatePrompt = () => {
-  //TODO:: Type this correctly,
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -29,8 +27,7 @@ const CreatePrompt = () => {
     setSubmitting(true);
 
     // If user id not available, stop process
-    // TODO:: Find a way to type session using UserProps in a not intrusive way so we cna remove this
-    if (!session?.user.id) {
+    if (!session?.user?.id) {
       setSubmitting(false);
       return;
     }
