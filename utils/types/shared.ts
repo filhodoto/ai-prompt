@@ -1,7 +1,9 @@
 // Types for user in app (to not be confused with user returned from Google auth)
-export interface UserProps {
-  id: string;
-  name: string;
+
+// Type for user collection saved in DB. Not to be confused with user types from authentication "ClientSafeProvider"
+interface UserProps {
+  _id: string;
+  username: string;
   email: string;
   image: string;
 }

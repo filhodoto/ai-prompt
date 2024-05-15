@@ -36,14 +36,14 @@ const renderProvidersSignIn = (providers: Providers) => {
 
 const defaultAvatar = '/assets/images/avatar.svg';
 
-const renderUserAvatar = (image = defaultAvatar, handleClick: () => void) => (
+const renderUserAvatar = (image = defaultAvatar, handleClick?: () => void) => (
   <Image
     className="object-contain rounded-full"
     src={image}
     alt="User icon"
     width={37}
     height={37}
-    onClick={handleClick}
+    {...(handleClick && { onClick: handleClick })}
   />
 );
 
@@ -94,7 +94,7 @@ const Nav = () => {
                 Sign Out
               </button>
               <Link href="/profile">
-                {renderUserAvatar(session?.user.image as string)}
+                {renderUserAvatar(session?.user.image)}
               </Link>
             </>
           ) : (
@@ -106,7 +106,7 @@ const Nav = () => {
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
-            {renderUserAvatar(session?.user.image as string, () =>
+            {renderUserAvatar(session?.user.image, () =>
               setToggleDropdown(!toggleDropdown)
             )}
             {toggleDropdown && (

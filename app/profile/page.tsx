@@ -1,6 +1,7 @@
 'use client';
 import PromptCard from '@components/PromptCard';
-import { PostProps, UserProps } from '@utils/types/shared';
+import { PostProps } from '@utils/types/shared';
+import { Profile as ProfileType } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -8,7 +9,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 const Profile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostProps[]>([]);
-  const [user, setUser] = useState<UserProps | null>(null);
+  const [user, setUser] = useState<ProfileType>();
 
   const router = useRouter();
 
