@@ -14,7 +14,6 @@ const CREATE_POST_API = '/api/post/new';
 
 // TODO:: Use React Form for the form in the future
 const CreatePrompt = () => {
-  //TODO:: Type this correctly,
   const { data: session } = useSession();
   const router = useRouter();
 

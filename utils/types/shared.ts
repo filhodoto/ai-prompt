@@ -14,3 +14,6 @@ export interface PostProps {
   tag: string;
   _id: string;
 }
+
+// Type for create/edit pages, where we will only need the text info of the posts
+export type PostInfoProps = Pick<PostProps, 'prompt' | 'tag'>;

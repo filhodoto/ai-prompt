@@ -1,13 +1,9 @@
 'use client';
 import Form from '@components/Form';
+import { PostInfoProps, PostProps } from '@utils/types/shared';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
-
-const defaultPost = {
-  prompt: '',
-  tag: '',
-};
 
 const EditPost = () => {
   const { data: session } = useSession();
@@ -18,7 +14,7 @@ const EditPost = () => {
   const postId = searchParams.get('id');
 
   const [submitting, setSubmitting] = useState(false);
-  const [post, setPost] = useState(defaultPost);
+  const [post, setPost] = useState<PostInfoProps>();
 
   const UpdatePost = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -27,7 +23,7 @@ const EditPost = () => {
     setSubmitting(true);
 
     // If user id not available, stop process
-    if (!session?.user?.id) {
+    if (!session?.user?.id || !post) {
       setSubmitting(false);
       return;
     }
