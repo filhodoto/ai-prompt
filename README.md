@@ -49,7 +49,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Optimizations
 
-- [ ] Deploy on Vercel
+- ✅ Deploy on Vercel
 - [ ] Implement search
   - by tag
   - by post text
