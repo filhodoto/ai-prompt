@@ -10,20 +10,18 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const showPosts = async (posts: Response) => {
-    const postsJSON = await posts.json();
-
-    // Show posts in list
-    setPosts(postsJSON);
-  };
-
-  const getPosts = async () => {
+  const getPosts = async (url: string) => {
     try {
       setIsLoading(true);
       // Get all posts
-      const response = await fetch(GET_POSTS_API);
+      const response = await fetch(url);
 
-      if (response.ok) showPosts(response);
+      if (response.ok) {
+        const postsJSON = await response.json();
+
+        // Show posts in list
+        setPosts(postsJSON);
+      }
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -36,23 +34,11 @@ const Feed = () => {
   we could use only one but function for code clarity we are using two  */
   const handleSearch = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
-    try {
-      setIsLoading(true);
-
-      // Get all posts
-      const response = await fetch(`${GET_POSTS_API}?filter=${searchText}`);
-
-      if (response.ok) showPosts(response);
-    } catch (error) {
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
+    await getPosts(`${GET_POSTS_API}?filter=${searchText}`);
   };
 
   useEffect(() => {
-    getPosts();
+    getPosts(GET_POSTS_API);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

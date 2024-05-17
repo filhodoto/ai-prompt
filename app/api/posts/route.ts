@@ -2,7 +2,6 @@ import Post from '@models/post';
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
 import { NextApiResponse } from 'next';
-import Error from 'next/error';
 import { NextResponse, NextRequest } from 'next/server';
 
 // Get ID of users with username contains the filter text
@@ -49,7 +48,7 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
     return NextResponse.json(allPosts, { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response(`Failed retrieving posts: ${error.message || error}`, {
+    return new Response('Failed retrieving posts', {
       status: 500,
     }); // Handle errors gracefully
   }
