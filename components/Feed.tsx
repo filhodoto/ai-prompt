@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PromptCard from './PromptCard';
 import { PostProps } from '@utils/types/shared';
+import { PromptList } from './PromptList';
 
 const GET_POSTS_API = '/api/posts';
 
@@ -67,21 +68,8 @@ const Feed = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
       </form>
-      {/* Render posts */}
-      {posts && !isLoading ? (
-        <div className="mt-16 prompt_layout">
-          {posts.map((post) => {
-            return <PromptCard key={post._id} post={post} />;
-          })}
-        </div>
-      ) : (
-        // TODO:: Add proper loading
-        <p>Loading...</p>
-      )}
-      {/* Show feedback for no prompts found */}
-      {posts.length === 0 && !isLoading && searchText && (
-        <span>No prompts found.</span>
-      )}
+      {/* TODO:: Get this to new Component that cna be re-used */}
+      <PromptList posts={posts} isLoading={isLoading} searchText={searchText} />
     </section>
   );
 };
