@@ -5,7 +5,7 @@ import PromptCard from './PromptCard';
 interface PromptListProps {
   posts: any[];
   isLoading: boolean;
-  searchText: string;
+  searchText?: string;
 }
 
 export const PromptList = ({
@@ -14,7 +14,7 @@ export const PromptList = ({
   searchText,
 }: PromptListProps) => {
   return (
-    <div className="mt-16">
+    <div className="mt-16 flex justify-center items-center">
       {posts && !isLoading ? (
         <div className="prompt_layout">
           {posts.map((post) => {
@@ -23,7 +23,7 @@ export const PromptList = ({
         </div>
       ) : (
         <Image
-          src="/assets/images/isLoading.svg"
+          src="/assets/images/loading.svg"
           alt="Loading"
           width={40}
           height={40}

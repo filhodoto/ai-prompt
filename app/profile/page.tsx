@@ -1,5 +1,6 @@
 'use client';
 import PromptCard from '@components/PromptCard';
+import { PromptList } from '@components/PromptList';
 import { PostProps } from '@utils/types/shared';
 import { Profile as ProfileType } from 'next-auth';
 import { useSession } from 'next-auth/react';
@@ -10,6 +11,7 @@ const Profile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [user, setUser] = useState<ProfileType>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -44,6 +46,8 @@ const Profile = () => {
 
     // Make API request to return all posts with creator == userID
     try {
+      setIsLoading(true);
+
       // Get all posts
       const response = await fetch(`/api/users/${user.id}/posts`);
 
@@ -56,6 +60,9 @@ const Profile = () => {
       }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }, [user]);
 
@@ -77,17 +84,7 @@ const Profile = () => {
         the power of your imagination and inspire a community of creators.
       </p>
 
-      <div className="mt-10 prompt_layout">
-        {posts &&
-          posts.map((post) => (
-            <PromptCard
-              key={post._id}
-              post={post}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-            />
-          ))}
-      </div>
+      <PromptList posts={posts} isLoading={isLoading} />
     </section>
   ) : (
     <></>

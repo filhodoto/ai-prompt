@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import PromptCard from './PromptCard';
 import { PostProps } from '@utils/types/shared';
 import { PromptList } from './PromptList';
 
