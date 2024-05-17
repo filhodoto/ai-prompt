@@ -8,6 +8,7 @@ const GET_POSTS_API = '/api/posts';
 const Feed = () => {
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [searchText, setSearchText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const showPosts = async (posts: Response) => {
     const postsJSON = await posts.json();
@@ -18,26 +19,36 @@ const Feed = () => {
 
   const getPosts = async () => {
     try {
+      setIsLoading(true);
       // Get all posts
       const response = await fetch(GET_POSTS_API);
 
       if (response.ok) showPosts(response);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  /* NOTE:: This function is similar to get posts, there's some logic repeatition.
-  we could use only one but for code clarity we are use two  */
+  /* NOTE:: This function is similar to get posts, there's some logic repetition.
+  we could use only one but function for code clarity we are using two  */
   const handleSearch = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
+
       // Get all posts
       const response = await fetch(`${GET_POSTS_API}?filter=${searchText}`);
 
       if (response.ok) showPosts(response);
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -57,12 +68,19 @@ const Feed = () => {
         />
       </form>
       {/* Render posts */}
-      {posts && (
+      {posts && !isLoading ? (
         <div className="mt-16 prompt_layout">
           {posts.map((post) => {
             return <PromptCard key={post._id} post={post} />;
           })}
         </div>
+      ) : (
+        // TODO:: Add proper loading
+        <p>Loading...</p>
+      )}
+      {/* Show feedback for no prompts found */}
+      {posts.length === 0 && !isLoading && searchText && (
+        <span>No prompts found.</span>
       )}
     </section>
   );
